@@ -18,7 +18,7 @@ namespace EmployeeLeaveManagement.Repository
         }
         public bool Create(LeaveType entity)
         {
-            _db.LeaveTypes.Remove(entity);
+            _db.LeaveTypes.Add(entity);
             return Save();
         }
 
@@ -55,6 +55,12 @@ namespace EmployeeLeaveManagement.Repository
         {
             _db.LeaveTypes.Update(entity);
             return Save();
+        }
+
+        public bool isExists(int id)
+        {
+            var exists = _db.LeaveTypes.Any(q => q.Id == id);
+            return exists;
         }
     }
 }

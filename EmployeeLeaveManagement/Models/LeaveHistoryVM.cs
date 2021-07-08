@@ -25,7 +25,7 @@ namespace EmployeeLeaveManagement.Models
 
         [ForeignKey("LeaveTypeId")]
 
-        public DetailsLeaveTypeVM LeaveType { get; set; }
+        public LeaveTypeVM LeaveType { get; set; }
 
         public int LeaveTypeId { get; set; }
 
