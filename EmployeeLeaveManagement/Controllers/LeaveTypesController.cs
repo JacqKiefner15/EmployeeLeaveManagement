@@ -126,13 +126,18 @@ namespace EmployeeLeaveManagement.Controllers
         // GET: LeaveType/Delete/5
         public ActionResult Delete(int id)
         {
-            if (!_repo.isExists(id))
+            var leavetype = _repo.FindById(id);
+            if (leavetype == null)
             {
                 return NotFound();
             }
-            var leavetype = _repo.FindById(id);
-            var model = _mapper.Map<LeaveTypeVM>(leavetype);
-            return View(model);
+            var isSuccess = _repo.Delete(leavetype);
+            if (!isSuccess)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: LeaveType/Delete/5
@@ -142,7 +147,19 @@ namespace EmployeeLeaveManagement.Controllers
         {
             try
             {
+
+                var leavetype = _repo.FindById(id);
+                if(leavetype == null)
+                {
+                    return NotFound();
+                }
+                var isSuccess = _repo.Delete(leavetype);
+                if (!isSuccess)
+                {
+                    return BadRequest(model);
+                }
                 return RedirectToAction(nameof(Index));
+
             }
             catch
             {
